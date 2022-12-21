@@ -3,18 +3,15 @@
 
 // refactoring to three.js by Sahand Babali // sahandbabali.com
 
-
-function randomGaussian()  {
+function randomGaussian() {
   do {
-    var x1 = Math.random()*2 - 1;
-    var x2 = Math.random()*2 - 1;
+    var x1 = Math.random() * 2 - 1;
+    var x2 = Math.random() * 2 - 1;
     var w = x1 * x1 + x2 * x2;
   } while (w >= 1);
-  w = Math.sqrt((-2 * Math.log(w))/w);
+  w = Math.sqrt((-2 * Math.log(w)) / w);
   return x1 * w;
 }
-
-// var p5 = new p5();
 
 var birds = [];
 var pipes = [];
@@ -22,9 +19,9 @@ var width = 640;
 var height = 480;
 var frameCount = 0;
 const TOTAL = 20;
-let savedBirds = []
+let savedBirds = [];
 let generationcounter = 0;
-let generationnumdom = document.getElementById("generationnum")
+let generationnumdom = document.getElementById("generationnum");
 
 // createCanvas(640, 480);
 const canvas = document.getElementById("canvas1");
@@ -87,7 +84,7 @@ scene.add(camera);
 // Controls
 const controls = new THREE.OrbitControls(camera, canvas);
 controls.enableDamping = true;
-controls.target.set(320,height/2,0)
+controls.target.set(320, height / 2, 0);
 
 /**
  * Renderer
@@ -98,44 +95,43 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(width, height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-
 const tick = () => {
-  // background(0);
   for (let i = scene.children.length - 1; i >= 0; i--) {
     if (scene.children[i].type === "Mesh") scene.remove(scene.children[i]);
   }
 
-
-if(birds.length == 0 ){
-  frameCount = 0;
-  nextGeneration()
-  generationcounter++;
-  generationnumdom.innerHTML = generationcounter;
-
-  pipes = []
-
-}
-if (frameCount % 200 == 0) {
-  pipes.push(new Pipe());
-}
-frameCount++;
+  if (birds.length == 0) {
+    frameCount = 0;
+    nextGeneration();
+    generationcounter++;
+    generationnumdom.innerHTML = generationcounter;
+    pipes = [];
+  }
+  if (frameCount % 200 == 0) {
+    pipes.push(new Pipe());
+  }
+  frameCount++;
 
   for (var i = pipes.length - 1; i >= 0; i--) {
     pipes[i].show();
     pipes[i].update();
 
-
     for (var j = birds.length - 1; j >= 0; j--) {
-         if (pipes[i].hits(birds[j])) {
-          savedBirds.push(birds.splice(j,1)[0])
-       // console.log("HIT");
-     }
+      if (pipes[i].hits(birds[j])) {
+        savedBirds.push(birds.splice(j, 1)[0]);
+      }
     }
-
-  
 
     if (pipes[i].offscreen()) {
       pipes.splice(i, 1);
+    }
+  }
+
+  for (var j = 0 ; j < birds.length ; j++) {
+    if (birds[j].y > height) {
+      savedBirds.push(birds.splice(j, 1)[0]);
+    }else if (birds[j].y < 0) {
+      savedBirds.push(birds.splice(j, 1)[0]);
     }
   }
 
@@ -147,14 +143,12 @@ frameCount++;
 
   scene.add(floor, roof);
 
-  
-
   camera.lookAt(width / 2, height / 2, 0);
 
   // Update controls
-   controls.target.set(width / 2, height/2, 0)
+  controls.target.set(width / 2, height / 2, 0);
 
-   controls.update()
+  controls.update();
 
   // Render
   renderer.render(scene, camera);
