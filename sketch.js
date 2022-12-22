@@ -131,7 +131,7 @@ const tick = () => {
     pipes = [];
     updatepopulation()
   }
-  if (frameCount % 150 == 0) {
+  if (frameCount % 120 == 0) {
     pipes.push(new Pipe());
   }
 

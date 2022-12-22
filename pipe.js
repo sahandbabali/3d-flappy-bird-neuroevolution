@@ -4,11 +4,12 @@
 // refactoring to three.js by Sahand Babali // sahandbabali.com
 
 function Pipe(bird) {
-  this.spacing = 250;
+  this.spacing = 150;
   this.top = randomInt(this.spacing, height);
   this.bottom = this.top - this.spacing;
-  this.x = width;
+  
   this.w = 60;
+  this.x = width - this.w / 2;
   this.speed = 2;
 
   this.hits = function (bird) {
@@ -58,7 +59,7 @@ function Pipe(bird) {
   };
 
   this.offscreen = function () {
-    if (this.x < -this.w) {
+    if (this.x < this.w / 2) {
       return true;
     } else {
       return false;
