@@ -13,12 +13,18 @@ function randomGaussian() {
   return x1 * w;
 }
 
+function randomInt(min, max) { // min and max included 
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+
+
 var birds = [];
 var pipes = [];
 var width = 640;
 var height = 480;
 var frameCount = 0;
-const TOTAL = 20;
+const TOTAL = 55;
 let savedBirds = [];
 let generationcounter = 0;
 let generationnumdom = document.getElementById("generationnum");
@@ -37,30 +43,29 @@ for (let index = 0; index < TOTAL; index++) {
  * Floor
  */
 const floor = new THREE.Mesh(
-  new THREE.BoxGeometry(640, 50, 2),
+  new THREE.BoxGeometry(640, 60, 60),
   new THREE.MeshLambertMaterial({
     color: "#e3db9d",
   })
 );
-floor.position.y -= 1;
+floor.position.y = 0 - 30;
 floor.name = "floor";
 floor.position.x += width / 2;
 
 floor.rotation.x = -Math.PI * 0.5;
-scene.add(floor);
 
 const roof = new THREE.Mesh(
-  new THREE.BoxGeometry(640, 50, 2),
+  new THREE.BoxGeometry(640, 60, 60),
   new THREE.MeshLambertMaterial({
     color: "#e3db9d",
   })
 );
-roof.position.y = height;
+roof.position.y = height + 30;
 roof.position.x += width / 2;
 roof.name = "roof";
 
 roof.rotation.x = -Math.PI * 0.5;
-scene.add(roof);
+scene.add(floor , roof);
 
 /**
  * Lights

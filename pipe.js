@@ -5,15 +5,14 @@
 
 function Pipe(bird) {
   this.spacing = 250;
-  this.top = Math.random() * 200 + 400;
-  this.bottom = this.top - 300 - this.spacing;
+  this.top = randomInt(this.spacing, height);
+  this.bottom = this.top - this.spacing;
   this.x = width;
   this.w = 60;
   this.speed = 2;
 
-
   this.hits = function (bird) {
-    if (bird.y > this.top - 150 - 20 || bird.y < this.bottom + 150 + 20) {
+    if (bird.y > this.top - 20 || bird.y < this.bottom + 20) {
       if (
         bird.x > this.x - this.w / 2 - 20 &&
         bird.x < this.x + this.w / 2 + 20
@@ -26,8 +25,10 @@ function Pipe(bird) {
   };
 
   this.show = function () {
+    // top side of the pipes
+    let boxtopheight = height - this.top;
     const box = new THREE.Mesh(
-      new THREE.BoxGeometry(this.w, 300, 60),
+      new THREE.BoxGeometry(this.w, boxtopheight, 60),
       new THREE.MeshLambertMaterial({
         color: "#75c00e",
       })
@@ -37,17 +38,19 @@ function Pipe(bird) {
       box.material.color = "red";
     }
 
-    box.position.set(this.x, this.top, 0);
+    box.position.set(this.x, (this.top + height) / 2, 0);
+
+    // bottom side of the pipes
 
     const box2 = new THREE.Mesh(
-      new THREE.BoxGeometry(this.w, 300, 60),
+      new THREE.BoxGeometry(this.w, this.bottom, 60),
       new THREE.MeshLambertMaterial({
         color: "#75c00e",
       })
     );
 
+    box2.position.set(this.x, this.bottom / 2, 0);
     scene.add(box, box2);
-    box2.position.set(this.x, this.bottom, 0);
   };
 
   this.update = function () {
