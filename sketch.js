@@ -20,6 +20,7 @@ function randomInt(min, max) { // min and max included
 
 
 var birds = [];
+var playing = false;
 var pipes = [];
 var width = 640;
 var height = 480;
@@ -28,6 +29,14 @@ const TOTAL = 55;
 let savedBirds = [];
 let generationcounter = 0;
 let generationnumdom = document.getElementById("generationnum");
+let startbutton = document.getElementById("startbutton")
+
+startbutton.addEventListener("click", function() {
+  playing = !playing
+  console.log(playing)
+  tick()
+});
+
 
 // createCanvas(640, 480);
 const canvas = document.getElementById("canvas1");
@@ -112,10 +121,9 @@ const tick = () => {
     generationnumdom.innerHTML = generationcounter;
     pipes = [];
   }
-  if (frameCount % 200 == 0) {
+  if (frameCount % 150 == 0) {
     pipes.push(new Pipe());
   }
-  frameCount++;
 
   for (var i = pipes.length - 1; i >= 0; i--) {
     pipes[i].show();
@@ -157,11 +165,20 @@ const tick = () => {
 
   // Render
   renderer.render(scene, camera);
-  frameCount++;
-  window.requestAnimationFrame(tick);
+    frameCount++;
+  
+  
+
+
+    if(playing) {
+      window.requestAnimationFrame(tick);
+    }
+
+  
 };
 
 tick();
+
 
 // window.onkeypress = function (event) {
 //   // console.log(event.keyCode)
