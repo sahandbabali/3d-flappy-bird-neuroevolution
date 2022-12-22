@@ -18,7 +18,9 @@ function randomInt(min, max) { // min and max included
 }
 
 
-
+function updatepopulation() {
+  populationnumdom.innerHTML = birds.length
+}
 var birds = [];
 var playing = false;
 var pipes = [];
@@ -28,13 +30,19 @@ var frameCount = 0;
 const TOTAL = 55;
 let savedBirds = [];
 let generationcounter = 0;
+
 let generationnumdom = document.getElementById("generationnum");
+let populationnumdom = document.getElementById("populationnum");
+
+
 let startbutton = document.getElementById("startbutton")
 
 startbutton.addEventListener("click", function() {
+
   playing = !playing
   console.log(playing)
   tick()
+  
 });
 
 
@@ -46,6 +54,7 @@ scene.background = new THREE.Color("#70c6d5");
 for (let index = 0; index < TOTAL; index++) {
   birds[index] = new Bird();
 }
+updatepopulation()
 
 // pipes.push(new Pipe());
 /**
@@ -120,6 +129,7 @@ const tick = () => {
     generationcounter++;
     generationnumdom.innerHTML = generationcounter;
     pipes = [];
+    updatepopulation()
   }
   if (frameCount % 150 == 0) {
     pipes.push(new Pipe());
@@ -132,6 +142,7 @@ const tick = () => {
     for (var j = birds.length - 1; j >= 0; j--) {
       if (pipes[i].hits(birds[j])) {
         savedBirds.push(birds.splice(j, 1)[0]);
+        updatepopulation()
       }
     }
 
@@ -143,8 +154,10 @@ const tick = () => {
   for (var j = 0 ; j < birds.length ; j++) {
     if (birds[j].y > height) {
       savedBirds.push(birds.splice(j, 1)[0]);
+      updatepopulation()
     }else if (birds[j].y < 0) {
       savedBirds.push(birds.splice(j, 1)[0]);
+      updatepopulation()
     }
   }
 

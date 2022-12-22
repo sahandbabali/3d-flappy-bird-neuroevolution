@@ -1,6 +1,5 @@
 function nextGeneration() {
-//   generation++;
-//   document.getElementById("generationcounter").innerText = generation;
+
 
   calculateFitness();
   console.log("next generation");
