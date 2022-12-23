@@ -8,7 +8,7 @@ function Bird(brain) {
   this.x = 64;
 
   this.gravity = - 0.7;
-  this.lift = 12;
+  this.lift = 20;
   this.velocity = 0;
   this.score = 0;
   this.fitness = 0
@@ -50,7 +50,7 @@ this.mutate = function (){
 
   this.show = function() {
     const sphere = new THREE.Mesh(
-      new THREE.SphereGeometry(20, 2, 2),
+      new THREE.SphereGeometry(20, 4, 4),
       new THREE.MeshBasicMaterial({
         color: '#e1cf0b',
       })

@@ -22,7 +22,7 @@ function updatepopulation() {
   populationnumdom.innerHTML = birds.length
 }
 var birds = [];
-var playing = false;
+var playing = true;
 var pipes = [];
 var width = 640;
 var height = 480;
